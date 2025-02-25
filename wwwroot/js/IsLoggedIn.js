@@ -15,13 +15,18 @@ window.onload = function () {
     const roles = ["Admin", "Manager", "Moderator"];
     var cookieValue = getCookie("Role");
     if (cookieValue) {
-        console.log(cookieValue);
         if (roles.includes(cookieValue)) {
             document.getElementById("modifyUser").style.display = "block";
-            //document.getElementById("addPoll").style.display = "compact";
+
+            if (document.getElementById("addPoll")) {
+                document.getElementById("addPoll").style.display = "compact";
+            }
         } else {
             document.getElementById("modifyUser").style.display = "none";
-            //document.getElementById("addPoll").style.display = "none";
+
+            if (document.getElementById("addPoll")) {
+                document.getElementById("addPoll").style.display = "none";
+            }
         }
         // Cookie exists, show logout item
         document.getElementById("loginA").style.display = "none";
@@ -30,8 +35,11 @@ window.onload = function () {
     } else {
         document.getElementById("logout").style.display = "none";
         document.getElementById("modifyUser").style.display = "none";
-        //document.getElementById("addPoll").style.display = "none";
         document.getElementById("loginA").style.display = "block";
         document.getElementById("signUpA").style.display = "block";
+
+        if (document.getElementById("addPoll")) {
+            document.getElementById("addPoll").style.display = "none";
+        }
     }
 };

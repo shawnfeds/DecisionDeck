@@ -1,23 +1,34 @@
 ﻿import { showMessage } from "./showMessage.js";
 
 document.getElementById('addPollButton').onclick = function () {
-    const passwordElement = document.getElementById('password');
-    const usernameElement = document.getElementById('username');
-    const firstElement = document.getElementById('firstname');
-    const lastElement = document.getElementById('lastname');
-    const passwordElement = document.getElementById('password');
-    const usernameElement = document.getElementById('username');
-    const firstElement = document.getElementById('firstname');
-    const lastElement = document.getElementById('lastname');
-
-    const password = passwordElement.value;
-    const username = usernameElement.value;
-    const firstName = firstElement.value;
-    const lastName = lastElement.value;
+    const name = document.getElementById('pollName').value;
+    const des = document.getElementById('description').value;
+    const endDate = document.getElementById('endDate').value;
+    const group = document.getElementById('selGroup').value;
+    const op1 = document.getElementById('op1').value;
+    const op2 = document.getElementById('op2').value;
+    const op3 = document.getElementById('op3').value;
+    const op4 = document.getElementById('op4').value;
 
 
-    if (password != "" && username != "" && firstName != "" && lastName != "") {
-        const data = { Password: password, Username: username, FullName: firstName + " " + lastName };
+    if (name != "" && des != "" && endDate != "" && group != "" && op1 != "" && op2 != "" && op3 != ""
+        && op4 != "") {
+
+        var list = [
+            op1,
+            op2,
+            op3,
+            op4
+        ];
+
+        const data =
+        {
+            PollName: name,
+            Description: des,
+            PollEndDate: endDate,
+            GroupId: group,
+            OptionList: list
+        };
 
         fetch('/Poll/CreatePoll', {
             method: 'POST',
@@ -33,7 +44,7 @@ document.getElementById('addPollButton').onclick = function () {
             })
             .catch((error) => {
                 console.error('Error:', error);
-                showMessage('error', 'Failed to enter the entry in the journal');
+                showMessage('error', 'Failed to create poll');
             });
     } else {
         alert("Please fill the required details..");
