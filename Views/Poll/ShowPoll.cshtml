@@ -1,0 +1,39 @@
+﻿@using DecisionDeck.DataAccessObjects
+@model PollDTO;
+
+@{
+    ViewData["Title"] = "ShowPoll";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Poll: @Model.PollName</h5>
+            <p class="card-title">@Model.Description</p>
+            @{
+                var index = 0;
+            }
+            <form id="pollForm">
+            @foreach (var option in Model.OptionList)
+            {
+                var optionId = $"option{index}";
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="pollOption" id="@optionId" value="@option">
+                    <label class="form-check-label" for="@optionId">
+                        @option
+                    </label>
+                </div>
+                index++;
+            }
+
+            <input type="button" id="vote" class="btn btn-outline-success mt-2" value="Vote" />
+            </form>
+            <div id="pollResult" class="mt-3">
+                <!--display result here-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/showPoll.js" asp-append-version="true"></script>
+
