@@ -1,0 +1,11 @@
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('General', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Survey Enthusiasts', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Polling Pioneers', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Vote Collectors', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Opinion Gatherers', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Feedback Facilitators', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Questionnaires Group', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Response Analysts', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Data Pollers', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Insight Seekers', CURRENT_TIMESTAMP);
+INSERT INTO groups (GroupName, CreatedDate) VALUES ('Demographic Surveyors', CURRENT_TIMESTAMP);

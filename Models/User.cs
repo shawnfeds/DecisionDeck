@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace DecisionDeck.Models;
+
+public partial class User
+{
+    public int UserId { get; set; }
+
+    public string Username { get; set; } = null!;
+
+    public string FullName { get; set; } = null!;
+
+    public string Password { get; set; } = null!;
+
+    public int? RoleId { get; set; }
+
+    public int? GroupId { get; set; }
+
+    public virtual Group? Group { get; set; }
+
+    public virtual Role? Role { get; set; }
+}
