@@ -1,7 +1,25 @@
-﻿
+﻿@model IEnumerable<Poll>
 @{
     ViewData["Title"] = "Polls";
 }
 
-<h1>Polls</h1>
 
+<div class="container">
+    <a href="/Poll/AddPoll" id="addPoll" class="btn btn-outline-primary mb-3 mt-3">CLick to create a new Poll</a>
+    <h2>Polls</h2>
+    <hr />
+    <div class="row">
+        @foreach (Poll poll in Model)
+        {
+            <div class="col-md-3">
+                <div class="card bg-white-50">
+                    <div class="card-body">
+                        <h5 class="card-title">@poll.PollName</h5>
+                        <p class="card-text">@poll.Description</p>
+                        <a href="/Poll/ShowPoll?PollId=@poll.PollId" class="btn btn-info">Vote Now</a>
+                    </div>
+                </div>
+            </div>
+        } 
+    </div>
+</div>
