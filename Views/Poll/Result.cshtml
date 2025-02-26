@@ -1,0 +1,28 @@
+﻿@using DecisionDeck.DataAccessObjects
+@model ResultDTO;
+
+@{
+    ViewData["Title"] = "Result";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Poll: @Model.Poll.PollName</h5>
+            <h7>@Model.Poll.Description</h7>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <ul class="list-group">
+                        @foreach(var result in Model.OptionResults){
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                @result.OptionName
+                                <span class="badge bg-primary rounded-pill">@result.Percentage%</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

@@ -16,7 +16,11 @@
                     <div class="card-body">
                         <h5 class="card-title">@poll.PollName</h5>
                         <p class="card-text">@poll.Description</p>
-                        <a href="/Poll/ShowPoll?PollId=@poll.PollId" class="btn btn-info">Vote Now</a>
+                        @if(poll.PollEndDate < DateTime.Now){
+                            <a href="/Poll/Result?PollId=@poll.PollId" class="btn btn-warning">ShowResult</a>
+                        }else{
+                            <a href="/Poll/ShowPoll?PollId=@poll.PollId" class="btn btn-info">Vote Now</a>
+                        }
                     </div>
                 </div>
             </div>
