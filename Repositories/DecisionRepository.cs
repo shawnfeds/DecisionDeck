@@ -10,25 +10,27 @@ namespace DecisionDeck.Repositories
         public DecisionDeckContext _decisionDeckContext;
         protected DbSet<T> _dbSet;
 
-        public DecisionRepository(DecisionDeckContext hangDbContext)
+        public DecisionRepository(DecisionDeckContext decisionDbContext)
         {
-            _decisionDeckContext = hangDbContext;
-            _dbSet = hangDbContext.Set<T>();
+            _decisionDeckContext = decisionDbContext;
+            _dbSet = decisionDbContext.Set<T>();
         }
 
-        public int Add(T entity)
+        public T Add(T entity)
         {
             try
             {
                 _dbSet.Attach(entity);
-                return _decisionDeckContext.SaveChanges();
+                _decisionDeckContext.SaveChanges();
+
+                return entity;
 
                 Log.Information("Added " + typeof(T).Name);
             }
             catch (Exception ex)
             {
                 Log.Error("[{Level}] {Message}\n{Exception}", ex.GetHashCode, ex.Message, ex.StackTrace);
-                return -1;
+                return null;
             }
         }
 

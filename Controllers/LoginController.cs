@@ -32,6 +32,7 @@ namespace DecisionDeck.Controllers
         public IActionResult Logout()
         {
             HttpContext.Response.Cookies.Delete("Role");
+            HttpContext.Response.Cookies.Delete("UserId");
             return Json(new { success = true });
         }
 
@@ -46,22 +47,8 @@ namespace DecisionDeck.Controllers
 
             if (userExists)
             {
-                var cookie = HttpContext.Request.Cookies["Role"];
-
-                if (cookie == null)
-                {
-
-                    CookieOptions options = new CookieOptions
-                    {
-                        Expires = DateTime.Now.AddMinutes(60), // Set expiration date to 7 days from now
-                        Path = "/", // Cookie is available within the entire application
-                        Secure = true, // Ensure the cookie is only sent over HTTPS
-                        HttpOnly = false, // Prevent client-side scripts from accessing the cookie
-                        IsEssential = true // Indicates the cookie is essential for the application to function
-                    };
-
-                    Response.Cookies.Append("Role", existingUser.Role.RoleName, options);
-                }
+                SetCustomCookie("Role", existingUser.Role.RoleName);
+                SetCustomCookie("UserId", existingUser.UserId.ToString());
 
                 return Json(new { success = true });
             }
@@ -79,6 +66,26 @@ namespace DecisionDeck.Controllers
             _repository.Add(newUser);
             
             return Json(new { success = true });
+        }
+
+        private void SetCustomCookie(string cookieName, string cookieValue)
+        {
+            var cookie = HttpContext.Request.Cookies[cookieName];
+
+            if (cookie == null)
+            {
+
+                CookieOptions options = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddMinutes(60), // Set expiration date to 7 days from now
+                    Path = "/", // Cookie is available within the entire application
+                    Secure = true, // Ensure the cookie is only sent over HTTPS
+                    HttpOnly = false, // Prevent client-side scripts from accessing the cookie
+                    IsEssential = true // Indicates the cookie is essential for the application to function
+                };
+
+                Response.Cookies.Append(cookieName, cookieValue, options);
+            }
         }
     }
 }

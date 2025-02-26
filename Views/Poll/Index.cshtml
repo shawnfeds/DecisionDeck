@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Poll>
+﻿@using DecisionDeck.DataAccessObjects
+@model IEnumerable<PollDTO>
 @{
     ViewData["Title"] = "Polls";
 }
@@ -9,17 +10,26 @@
     <h2>Polls</h2>
     <hr />
     <div class="row">
-        @foreach (Poll poll in Model)
+        @foreach (var poll in Model)
         {
             <div class="col-md-3">
                 <div class="card bg-white-50">
                     <div class="card-body">
                         <h5 class="card-title">@poll.PollName</h5>
                         <p class="card-text">@poll.Description</p>
-                        @if(poll.PollEndDate < DateTime.Now){
-                            <a href="/Poll/Result?PollId=@poll.PollId" class="btn btn-warning">ShowResult</a>
+                        @if(poll.AlreadyVoted){
+                            @if (poll.PollEndDate < DateTime.Now)
+                            {
+                                <a href="/Poll/Result?PollId=@poll.PollId" class="btn btn-warning">ShowResult</a>
+                            }
                         }else{
-                            <a href="/Poll/ShowPoll?PollId=@poll.PollId" class="btn btn-info">Vote Now</a>
+                            @if (poll.PollEndDate < DateTime.Now)
+                            {
+                                <a href="/Poll/Result?PollId=@poll.PollId" class="btn btn-warning">ShowResult</a>
+                            }else
+                            {
+                                <a href="/Poll/ShowPoll?PollId=@poll.PollId" class="btn btn-info">Vote Now</a>
+                            }
                         }
                     </div>
                 </div>

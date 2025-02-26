@@ -17,6 +17,8 @@ public partial class Poll
 
     public int? GroupId { get; set; }
 
+    public virtual ICollection<AlreadyVoted> AlreadyVoteds { get; set; } = new List<AlreadyVoted>();
+
     public virtual Group? Group { get; set; }
 
     public virtual ICollection<PollOption> PollOptions { get; set; } = new List<PollOption>();

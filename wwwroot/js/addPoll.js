@@ -1,4 +1,5 @@
 ﻿import { showMessage } from "./showMessage.js";
+import { getCookie } from "./cookie.js";
 
 document.getElementById('addPollButton').onclick = function () {
     const name = document.getElementById('pollName').value;
@@ -40,7 +41,8 @@ document.getElementById('addPollButton').onclick = function () {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                window.location.href = "/Poll/Index";
+                var userId = getCookie("UserId");
+                window.location.href = "/Poll/Index?UserId="+userId;
             })
             .catch((error) => {
                 console.error('Error:', error);
