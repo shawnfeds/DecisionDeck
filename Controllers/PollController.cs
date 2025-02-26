@@ -4,6 +4,7 @@ using DecisionDeck.DataAccessObjects;
 using DecisionDeck.Models;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using System;
 
 namespace DecisionDeck.Controllers
 {
@@ -29,6 +30,51 @@ namespace DecisionDeck.Controllers
         public IActionResult AddPoll()
         {
             return View(_decisionRepository.GetAll());
+        }
+
+        public IActionResult Result()
+        {
+            if (!string.IsNullOrEmpty(Request.Query["PollId"]))
+            {
+                try
+                {
+                    int pollId = Convert.ToInt32(Request.Query["PollId"]);
+
+                    var pollDTO = _mapper.Map<PollDTO>(_repository.GetById(pollId));
+
+                    var pollOptions = _pORepository.GetByPollId(pollId).ToList();
+                    var totalVotes = _pORepository.GetByPollId(pollId).Sum(po => po.SelectedCount);
+
+                    var result = new ResultDTO();
+
+                    result.Poll = pollDTO;
+
+                    foreach (var option in pollOptions)
+                    {
+                        double percent = (option.SelectedCount.GetValueOrDefault() / (double)totalVotes) *100;
+                        double formattedPercent = Convert.ToDouble(String.Format("{0:0.0}", percent));
+
+                        var resultOption = new ResultOptionDTO()
+                        {
+                            OptionName = option.OptionName,
+                            Percentage = formattedPercent
+                        };
+
+                        result.OptionResults.Add(resultOption);
+                    }
+
+                    return View(result);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult ShowPoll()
