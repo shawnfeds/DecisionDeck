@@ -13,18 +13,45 @@ namespace DecisionDeck.Controllers
         private readonly IDecisionRepository<Group> _decisionRepository;
         private readonly IPollOptionRepository _pORepository;
         private readonly IPollRepository _repository;
+        private readonly IAlreadyVotedRepository _alreadyVotedRepository;
         private readonly IMapper _mapper;
 
-        public PollController(IDecisionRepository<Group> decisionRepository, IPollOptionRepository PORepository, IPollRepository repository, IMapper mapper)
+        public PollController(IDecisionRepository<Group> decisionRepository,
+            IPollOptionRepository PORepository,
+            IPollRepository repository,
+            IAlreadyVotedRepository alreadyVotedRepository,
+            IMapper mapper)
         {
             _decisionRepository = decisionRepository;
             _pORepository = PORepository;
             _repository = repository;
+            _alreadyVotedRepository = alreadyVotedRepository;
             _mapper = mapper;
         }
         public IActionResult Index()
         {
-            return View(_repository.GetAll());
+            if (!string.IsNullOrEmpty(Request.Query["UserId"]))
+            {
+                int userId = Convert.ToInt32(Request.Query["UserId"]);
+                var pollDTOList = _mapper.Map<IEnumerable<PollDTO>>(_repository.GetAll());
+
+                foreach (var pollDTO in pollDTOList)
+                {
+                    var votedDTO = new AlreadyVotedDTO()
+                    {
+                        PollId = pollDTO.PollId,
+                        UserId = userId,
+                    };
+
+                    pollDTO.AlreadyVoted = _alreadyVotedRepository.HasVoted(votedDTO);
+                }
+
+                return View(pollDTOList);
+            }
+            else
+            {
+                return Redirect("/Home/Index");
+            }
         }
 
         public IActionResult AddPoll()
@@ -118,7 +145,7 @@ namespace DecisionDeck.Controllers
 
             var newPoll = _mapper.Map<Models.Poll>(pollDTO);
 
-            var newPollId = _repository.Add(newPoll);
+            var newPollId = _repository.Add(newPoll).PollId;
 
             foreach (var option in pollDTO.OptionList)
             {
@@ -152,6 +179,12 @@ namespace DecisionDeck.Controllers
             pollOption.SelectedCount++;
 
             _pORepository.Update(pollOption);
+
+            _alreadyVotedRepository.Add(new AlreadyVoted()
+            {
+                PollId = voteDTO.PollId,
+                UserId = voteDTO.UserId
+            });
 
             return Json(new { success = true });
         }

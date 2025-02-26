@@ -1,14 +1,4 @@
-﻿// Function to get a cookie by its name
-function getCookie(name) {
-    let cookieArr = document.cookie.split(";");
-    for (let i = 0; i < cookieArr.length; i++) {
-        let cookie = cookieArr[i].trim();
-        if (cookie.startsWith(name + "=")) {
-            return cookie.substring(name.length + 1, cookie.length);
-        }
-    }
-    return null;
-}
+﻿import { getCookie } from "./cookie.js";
 
 // Check if the cookie exists and display the logout link if it does
 window.onload = function () {

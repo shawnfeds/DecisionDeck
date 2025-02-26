@@ -15,6 +15,8 @@ public partial class DecisionDeckContext : DbContext
     {
     }
 
+    public virtual DbSet<AlreadyVoted> AlreadyVoteds { get; set; }
+
     public virtual DbSet<Group> Groups { get; set; }
 
     public virtual DbSet<Poll> Polls { get; set; }
@@ -27,6 +29,29 @@ public partial class DecisionDeckContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AlreadyVoted>(entity =>
+        {
+            entity.HasKey(e => e.AlreadyVotedId).HasName("PK__AlreadyV__D204EAB749DB3492");
+
+            entity.ToTable("AlreadyVoted");
+
+            entity.HasIndex(e => new { e.UserId, e.PollId }, "UQ__AlreadyV__A991854988DED23F").IsUnique();
+
+            entity.Property(e => e.AlreadyVotedId).HasColumnName("AlreadyVotedID");
+            entity.Property(e => e.PollId).HasColumnName("PollID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Poll).WithMany(p => p.AlreadyVoteds)
+                .HasForeignKey(d => d.PollId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AlreadyVo__PollI__29572725");
+
+            entity.HasOne(d => d.User).WithMany(p => p.AlreadyVoteds)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AlreadyVo__UserI__286302EC");
+        });
+
         modelBuilder.Entity<Group>(entity =>
         {
             entity.HasKey(e => e.GroupId).HasName("PK__Groups__149AF30A114506C3");

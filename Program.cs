@@ -19,6 +19,7 @@ builder.Services.AddScoped(typeof(IDecisionRepository<>), typeof(DecisionReposit
 builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IPollRepository), typeof(PollRepository));
 builder.Services.AddScoped(typeof(IPollOptionRepository), typeof(PollOptionRepository));
+builder.Services.AddScoped(typeof(IAlreadyVotedRepository), typeof(AlreadyVotedRepository));
 
 builder.Services.AddAutoMapper(typeof(DecisionDeckProfiles));
 

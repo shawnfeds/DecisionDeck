@@ -50,3 +50,14 @@ CREATE TABLE PollOptions (
     SelectedCount INT DEFAULT 0,
     FOREIGN KEY (PollID) REFERENCES Polls(PollID)
 );
+
+-- Creating the AlreadyVoted table next, as it depends on Polls and Users
+CREATE TABLE AlreadyVoted (
+    AlreadyVotedID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL,
+    PollID INT NOT NULL,
+    UNIQUE (UserID, PollID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (PollID) REFERENCES Polls(PollID)
+);
+

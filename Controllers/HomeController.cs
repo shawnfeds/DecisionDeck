@@ -15,7 +15,7 @@ namespace DecisionDeck.Controllers
 
         public IActionResult Index()
         {
-            if (HttpContext.Request.Cookies["Role"] == null)
+            if (HttpContext.Request.Cookies["Role"] == null && HttpContext.Request.Cookies["UserId"] == null)
             {
                 return Redirect("Login/Index"); 
             }
