@@ -22,25 +22,24 @@ DecisionDeck is a poll app where users can vote on various topics. Only certain 
    git clone https://github.com/yourusername/decisionDeck.git
    ```
 2. Navigate to the project directory:
-
-```
-cd decisionDeck
-```
+   ```
+   cd decisionDeck
+   ```
 3. Install dependencies:
-
-```
-dotnet restore
-```
+   ```
+   dotnet restore
+   ```
+   
 ## Usage
 1. Build the project:
-```
-dotnet build
-```
+   ```
+   dotnet build
+   ```
 
 2. Start the application:
-```
-dotnet run
-```
+   ```
+   dotnet run
+   ```
 
 3. Access the application in your web browser at http://localhost:5000.
 
@@ -48,19 +47,19 @@ dotnet run
 1. Fork the repository.
 
 2. Create a new branch for your feature or bugfix:
-```
-git checkout -b feature-name
-```
+   ```
+   git checkout -b feature-name
+   ```
 
 3. Commit your changes:
-```
-git commit -m "Description of your changes"
-```
+   ```
+   git commit -m "Description of your changes"
+   ```
 
 4. Push to the branch:
-```
-git push origin feature-name
-```
+   ```
+   git push origin feature-name
+   ```
 
 5. Create a pull request.
 
