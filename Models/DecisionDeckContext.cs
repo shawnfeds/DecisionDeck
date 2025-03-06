@@ -59,6 +59,7 @@ public partial class DecisionDeckContext : DbContext
             entity.Property(e => e.GroupId).HasColumnName("GroupID");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.GroupName).HasMaxLength(100);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<Poll>(entity =>
@@ -109,6 +110,7 @@ public partial class DecisionDeckContext : DbContext
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.FullName).HasMaxLength(100);
             entity.Property(e => e.GroupId).HasColumnName("GroupID");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Password).HasMaxLength(100);
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Username).HasMaxLength(50);

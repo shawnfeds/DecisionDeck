@@ -28,7 +28,7 @@ namespace DecisionDeck.Controllers
 
         public IActionResult Index()
         {
-            return View(_userRepository.GetAll());
+            return View(_userRepository.GetAll().Where(u => u.IsActive == true));
         }
 
         public IActionResult Edit()
@@ -57,7 +57,11 @@ namespace DecisionDeck.Controllers
         {
             if (userDTO != null)
             {
-                _userRepository.Delete(userDTO.UserId);
+                var user = _userRepository.GetById(userDTO.UserId);
+
+                user.IsActive = false;
+
+                _userRepository.Update(user);
 
                 return Json(new { success = true });
             }
