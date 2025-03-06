@@ -56,7 +56,37 @@ namespace DecisionDeck.Controllers
 
         public IActionResult AddPoll()
         {
-            return View(_decisionRepository.GetAll());
+            var pollDTO = new PollDTO()
+            {
+                Groups = _decisionRepository.GetAll().ToList()
+            };
+
+            return View(pollDTO);
+        }
+
+        public IActionResult EditPoll()
+        {
+            if (!string.IsNullOrEmpty(Request.Query["PollId"]))
+            {
+                try
+                {
+                    int pollId = Convert.ToInt32(Request.Query["PollId"]);
+
+                    var pollDTO = _mapper.Map<PollDTO>(_repository.GetById(pollId));
+
+                    pollDTO.Groups = _decisionRepository.GetAll().ToList();
+                    return View(pollDTO);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Result()
@@ -78,7 +108,7 @@ namespace DecisionDeck.Controllers
 
                     foreach (var option in pollOptions)
                     {
-                        double percent = (option.SelectedCount.GetValueOrDefault() / (double)totalVotes) *100;
+                        double percent = (option.SelectedCount.GetValueOrDefault() / (double)totalVotes) * 100;
                         double formattedPercent = Convert.ToDouble(String.Format("{0:0.0}", percent));
 
                         var resultOption = new ResultOptionDTO()
@@ -158,6 +188,31 @@ namespace DecisionDeck.Controllers
 
                 _pORepository.Add(newPollOption);
             }
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public IActionResult Edit([FromBody] PollDTO pollDTO)
+        {
+            if (pollDTO == null)
+            {
+                return Json(new { success = false });
+            }
+
+            var poll = _repository.GetById(pollDTO.PollId);
+
+            if (poll == null)
+            {
+                return Json(new { success = false });
+            }
+
+            poll.PollName = pollDTO.PollName;
+            poll.Description = pollDTO.Description;
+            poll.PollEndDate = pollDTO.PollEndDate;
+            poll.GroupId = pollDTO.GroupId;
+
+            _repository.Update(poll);
+
             return Json(new { success = true });
         }
 

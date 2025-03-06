@@ -74,6 +74,10 @@ public partial class DecisionDeckContext : DbContext
             entity.HasOne(d => d.Group).WithMany(p => p.Polls)
                 .HasForeignKey(d => d.GroupId)
                 .HasConstraintName("FK__Polls__GroupID__182C9B23");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Polls)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_Polls_User");
         });
 
         modelBuilder.Entity<PollOption>(entity =>

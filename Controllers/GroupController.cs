@@ -61,9 +61,11 @@ namespace DecisionDeck.Controllers
                 return Json(new { success = false });
             }
 
-            var user = _mapper.Map<Group>(groupDTO);
+            var group = _groupRepository.GetById(groupDTO.GroupId);
 
-            _groupRepository.Update(user);
+            group.GroupName = groupDTO.GroupName;
+
+            _groupRepository.Update(group);
 
             return Json(new { success = true });
         }

@@ -1,0 +1,68 @@
+﻿@using DecisionDeck.DataAccessObjects
+@model PollDTO
+
+@{
+    ViewData["Title"] = "Edit Poll";
+}
+
+<div class="container">
+    <div id="message-container" class="mb-2"></div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h2 class="text-center">Edit Poll</h2>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <input type="text" id="pollName" class="form-control" placeholder="Poll Name" value="@Model.PollName"/>
+                    <p id="errorPname"></p>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <div class="input-group">
+                        <input type="text" id="description" class="form-control" placeholder="Description" value="@Model.Description" />
+                    </div>
+                    <p id="errorPDes"></p>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <div class="input-group">
+                        <input type="date" id="endDate" class="form-control" placeholder="End Date" value="@Model.PollEndDate.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <p id="errorPED"></p>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <div class="input-group">
+                        <select class="form-control" id="selGroup">
+                            <option>-- Select Group --</option>
+                            @foreach (Group group in Model.Groups)
+                            {
+                                @if(group.GroupId == Model.GroupId){
+                                    <option value="@group.GroupId" selected> @group.GroupName</option>
+                                }else{
+                                    <option value="@group.GroupId"> @group.GroupName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <p id="errorPGroup"></p>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10 d-grid gap-2">
+                    <input type="button" id="editPollButton" class="btn btn-outline-success" value="Edit Poll" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="~/js/editPoll.js" asp-append-version="true"></script>
+
