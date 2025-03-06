@@ -1,9 +1,17 @@
 ﻿@using DecisionDeck.DataAccessObjects
+@using Microsoft.AspNetCore.Mvc
 @model IEnumerable<PollDTO>
 @{
     ViewData["Title"] = "Polls";
-}
 
+    var cookieValue = Context.Request.Cookies["UserId"];
+    int userIdFromCookie = 0;
+
+    if (!string.IsNullOrEmpty(cookieValue))
+    {
+        userIdFromCookie = Convert.ToInt32(cookieValue);
+    }
+}
 
 <div class="container">
     <a href="/Poll/AddPoll" id="addPoll" class="btn btn-outline-primary mb-3 mt-3">CLick to create a new Poll</a>
@@ -29,6 +37,11 @@
                             }else
                             {
                                 <a href="/Poll/ShowPoll?PollId=@poll.PollId" class="btn btn-info">Vote Now</a>
+
+                                @if (poll.UserId == userIdFromCookie)
+                                {
+                                    <a href="/Poll/EditPoll?PollId=@poll.PollId" class="btn btn-warning">Edit</a>
+                                }
                             }
                         }
                     </div>

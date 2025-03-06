@@ -21,5 +21,7 @@ public partial class User
 
     public virtual Group? Group { get; set; }
 
+    public virtual ICollection<Poll> Polls { get; set; } = new List<Poll>();
+
     public virtual Role? Role { get; set; }
 }

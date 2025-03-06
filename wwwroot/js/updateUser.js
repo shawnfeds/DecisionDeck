@@ -2,7 +2,7 @@
 
 document.getElementById('updateUserBtn').onclick = function () {
     const urlParams = new URLSearchParams(window.location.search);
-    const groupId = urlParams.get('UserId');
+    const userId = urlParams.get('UserId');
 
     const uname = document.getElementById('userName').value;
     const fname = document.getElementById('fullName').value;
@@ -12,6 +12,7 @@ document.getElementById('updateUserBtn').onclick = function () {
     if (uname != "" && fname != "" && role != "" && group != "") {
         const data =
         {
+            UserId: userId
             UserName: uname,
             FullName: fname,
             RoleId: role,

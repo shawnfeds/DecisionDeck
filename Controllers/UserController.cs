@@ -73,7 +73,12 @@ namespace DecisionDeck.Controllers
                 return Json(new { success = false });
             }
 
-            var user = _mapper.Map<User>(userDTO);
+            var user = _userRepository.GetById(userDTO.UserId);
+
+            user.Username = userDTO.Username;
+            user.FullName = userDTO.FullName;
+            user.RoleId = userDTO.RoleID;
+            user.GroupId = userDTO.GroupID;
 
             _userRepository.Update(user);
 

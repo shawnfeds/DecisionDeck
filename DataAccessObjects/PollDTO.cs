@@ -1,4 +1,6 @@
-﻿namespace DecisionDeck.DataAccessObjects
+﻿using DecisionDeck.Models;
+
+namespace DecisionDeck.DataAccessObjects
 {
     public class PollDTO
     {
@@ -12,8 +14,11 @@
         public DateTime PollEndDate { get; set; }
 
         public int? GroupId { get; set; }
+        public int? UserId { get; set; }
 
         public List<string> OptionList { get; set; } = new List<string>();
+
+        public List<Group> Groups { get; set; } = new List<Group>();
 
         public bool AlreadyVoted { get; set; }
     }
