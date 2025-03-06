@@ -19,7 +19,7 @@ namespace DecisionDeck.Controllers
         }
         public IActionResult Index()
         {
-            return View(_groupRepository.GetAll());
+            return View(_groupRepository.GetAll().Where(g => g.IsActive == true));
         }
 
         public IActionResult Edit()
@@ -45,7 +45,11 @@ namespace DecisionDeck.Controllers
         {
             if (groupDTO != null)
             {
-                _groupRepository.Delete(groupDTO.GroupId);
+                var group = _groupRepository.GetById(groupDTO.GroupId);
+
+                group.IsActive = false;
+
+                _groupRepository.Update(group);
 
                 return Json(new { success = true });
             }

@@ -17,6 +17,8 @@ public partial class User
 
     public int? GroupId { get; set; }
 
+    public bool? IsActive { get; set; }
+
     public virtual ICollection<AlreadyVoted> AlreadyVoteds { get; set; } = new List<AlreadyVoted>();
 
     public virtual Group? Group { get; set; }

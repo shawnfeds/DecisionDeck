@@ -10,6 +10,7 @@ elements.forEach(element => {
 
 export function DeleteGroup () {
     if (confirm("Are you Sure! You want to delete Group.") == true) {
+        console.log("inside");
         const groupId = document.getElementById('groupId').innerText;
 
         const data =
@@ -27,6 +28,7 @@ export function DeleteGroup () {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
+                location.reload();
             })
             .catch((error) => {
                 console.error('Error:', error);

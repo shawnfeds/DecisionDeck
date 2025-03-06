@@ -10,6 +10,7 @@ elements.forEach(element => {
 
 function DeleteUser () {
     if (confirm("Are you Sure! You want to delete User.") == true) {
+        console.log("inside");
         const userId = document.getElementById('userId').innerText;
 
         const data =
@@ -26,6 +27,7 @@ function DeleteUser () {
         }).then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
+                location.reload();
             })
             .catch((error) => {
                 console.error('Error:', error);

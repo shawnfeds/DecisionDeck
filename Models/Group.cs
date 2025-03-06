@@ -11,6 +11,8 @@ public partial class Group
 
     public DateTime CreatedDate { get; set; }
 
+    public bool? IsActive { get; set; }
+
     public virtual ICollection<Poll> Polls { get; set; } = new List<Poll>();
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
