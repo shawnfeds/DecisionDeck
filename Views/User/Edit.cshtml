@@ -1,0 +1,89 @@
+﻿@using DecisionDeck.DataAccessObjects
+@model UserDTO
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="container">
+    <div id="message-container" class="mb-2"></div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h2 class="text-center">Edit User</h2>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <input type="text" id="userName" class="form-control" placeholder="UserName" value="@Model.Username" />
+                    <p id="errorUname"></p>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <input type="text" id="fullName" class="form-control" placeholder="Full Name" value="@Model.FullName" />
+                    <p id="errorFname"></p>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <div class="input-group">
+                        <select class="form-control" id="selRole">
+                            <option>-- Select Role --</option>
+                            @foreach (Role role in Model.Roles)
+                            {
+                                if (role.RoleId == Model.RoleID)
+                                {
+                                    <option value="@role.RoleId" selected>
+                                        @role.RoleName
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@role.RoleId">
+                                        @role.RoleName
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <p id="errorPRole"></p>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <div class="input-group">
+                        <select class="form-control" id="selGroup">
+                            <option>-- Select Group --</option>
+                            @foreach (var group in Model.Groups)
+                            {
+                                if (group.GroupId == Model.GroupID)
+                                {
+                                    <option value="@group.GroupId" selected> @group.GroupName</option>
+                                }
+                                else
+                                {
+                                    <option value="@group.GroupId"> @group.GroupName</option>
+                                } 
+                            }
+                        </select>
+                    </div>
+                    <p id="errorPGroup"></p>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-2"></div>
+                <div class="col-10 d-grid gap-2">
+                    <input type="button" id="updateUserBtn" class="btn btn-outline-success" value="Update User" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="module" src="/js/updateUser.js"></script>
+}

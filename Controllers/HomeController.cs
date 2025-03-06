@@ -1,16 +1,16 @@
 using System.Diagnostics;
+using DecisionDeck.Contracts;
 using DecisionDeck.Models;
+using DecisionDeck.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DecisionDeck.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
+            
         }
 
         public IActionResult Index()
@@ -20,16 +20,6 @@ namespace DecisionDeck.Controllers
                 return Redirect("Login/Index"); 
             }
 
-            return View();
-        }
-
-        public IActionResult ModifyUser()
-        {
-            return View();
-        }
-
-        public IActionResult Groups()
-        {
             return View();
         }
 
