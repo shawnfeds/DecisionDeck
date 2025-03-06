@@ -8,6 +8,7 @@ namespace DecisionDeck.MappingProfiles
         {
             CreateMap<DataAccessObjects.UserDTO, Models.User>().ReverseMap();
             CreateMap<DataAccessObjects.PollDTO, Models.Poll>().ReverseMap();
+            CreateMap<DataAccessObjects.GroupDTO, Models.Group>().ReverseMap();
         }
     }
 }
