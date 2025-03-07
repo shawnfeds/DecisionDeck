@@ -19,7 +19,14 @@ namespace DecisionDeck.Controllers
         }
         public IActionResult Index()
         {
-            return View(_groupRepository.GetAll().Where(g => g.IsActive == true));
+            var pageDTO = new GroupPageDTO();
+
+            pageDTO.Groups = _groupRepository.GetAll();
+            pageDTO.TotalGroupCount = pageDTO.Groups.Count();
+            pageDTO.ActiveGroupCount = pageDTO.Groups.Where(g => g.IsActive == true).Count();
+            pageDTO.InActiveGroupCount = pageDTO.Groups.Where(g => g.IsActive == false).Count();
+
+            return View(pageDTO);
         }
 
         public IActionResult Edit()

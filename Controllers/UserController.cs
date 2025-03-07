@@ -28,7 +28,14 @@ namespace DecisionDeck.Controllers
 
         public IActionResult Index()
         {
-            return View(_userRepository.GetAll().Where(u => u.IsActive == true));
+            var pageDTO = new UserPageDTO();
+
+            pageDTO.Users = _userRepository.GetAll();
+            pageDTO.TotalUserCount = pageDTO.Users.Count();
+            pageDTO.ActiveUserCount = pageDTO.Users.Where(u => u.IsActive == true).Count();
+            pageDTO.InActiveUserCount = pageDTO.Users.Where(u => u.IsActive == false).Count();
+
+            return View(pageDTO);
         }
 
         public IActionResult Edit()
