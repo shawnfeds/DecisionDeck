@@ -21,10 +21,11 @@ namespace DecisionDeck.Controllers
         {
             var pageDTO = new GroupPageDTO();
 
-            pageDTO.Groups = _groupRepository.GetAll();
-            pageDTO.TotalGroupCount = pageDTO.Groups.Count();
-            pageDTO.ActiveGroupCount = pageDTO.Groups.Where(g => g.IsActive == true).Count();
-            pageDTO.InActiveGroupCount = pageDTO.Groups.Where(g => g.IsActive == false).Count();
+            var groups = _groupRepository.GetAll();
+            pageDTO.Groups = groups.Where(g => g.IsActive == true);
+            pageDTO.TotalGroupCount = groups.Count();
+            pageDTO.ActiveGroupCount = groups.Where(g => g.IsActive == true).Count();
+            pageDTO.InActiveGroupCount = groups.Where(g => g.IsActive == false).Count();
 
             return View(pageDTO);
         }
@@ -44,6 +45,31 @@ namespace DecisionDeck.Controllers
             else
             {
                 return RedirectToAction("Index");
+            }
+        }
+
+        public IActionResult AddGroup()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Add([FromBody] GroupDTO groupDTO)
+        {
+            if (groupDTO != null)
+            {
+                var group = _mapper.Map<Group>(groupDTO);
+
+                group.IsActive = true;
+
+                _groupRepository.Add(group);
+
+                return Json(new { success = true });
+            }
+            else
+            {
+                return Json(new { success = false });
             }
         }
 
