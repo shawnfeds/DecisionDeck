@@ -30,10 +30,12 @@ namespace DecisionDeck.Controllers
         {
             var pageDTO = new UserPageDTO();
 
-            pageDTO.Users = _userRepository.GetAll();
-            pageDTO.TotalUserCount = pageDTO.Users.Count();
-            pageDTO.ActiveUserCount = pageDTO.Users.Where(u => u.IsActive == true).Count();
-            pageDTO.InActiveUserCount = pageDTO.Users.Where(u => u.IsActive == false).Count();
+            var users = _userRepository.GetAll();
+
+            pageDTO.Users = users.Where(u => u.IsActive == true);
+            pageDTO.TotalUserCount = users.Count();
+            pageDTO.ActiveUserCount = users.Where(u => u.IsActive == true).Count();
+            pageDTO.InActiveUserCount = users.Where(u => u.IsActive == false).Count();
 
             return View(pageDTO);
         }

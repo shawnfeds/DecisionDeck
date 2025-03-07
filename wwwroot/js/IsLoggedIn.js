@@ -11,12 +11,20 @@ window.onload = function () {
             if (document.getElementById("addPoll")) {
                 document.getElementById("addPoll").style.display = "compact";
             }
+
+            if (document.title == "Groups - DecisionDeck") {
+                document.getElementById("addGroup").style.display = "block";
+            } else {
+                document.getElementById("addGroup").style.display = "none";
+            }
         } else {
             document.getElementById("modifyUser").style.display = "none";
 
             if (document.getElementById("addPoll")) {
                 document.getElementById("addPoll").style.display = "none";
             }
+
+            document.getElementById("addGroup").style.display = "none";
         }
         // Cookie exists, show logout item
         document.getElementById("loginA").style.display = "none";
@@ -31,5 +39,7 @@ window.onload = function () {
         if (document.getElementById("addPoll")) {
             document.getElementById("addPoll").style.display = "none";
         }
+
+        document.getElementById("addGroup").style.display = "none";
     }
 };
